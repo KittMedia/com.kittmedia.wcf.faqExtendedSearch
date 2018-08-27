@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/language.xsd" languagecode="de">
+	<category name="wcf.extendedSearch">
+		<item name="wcf.extendedSearch.group.faq"><![CDATA[Häufig gestellte Fragen]]></item>
+	</category>
+	
+	<category name="wcf.acp.option">
+		<item name="wcf.acp.option.category.extended_search.faq"><![CDATA[Häufig gestellte Fragen]]></item>
+		<item name="wcf.acp.option.extended_search_faq_enabled"><![CDATA[Vorschläge aktivieren]]></item>
+		<item name="wcf.acp.option.extended_search_faq_enable_path"><![CDATA[Kategoriepfad anzeigen]]></item>
+		<item name="wcf.acp.option.extended_search_faq_count"><![CDATA[Anzahl Vorschläge]]></item>
+	</category>
+</language>
