@@ -60,6 +60,7 @@ class ExtendedSearchFAQListener implements IParameterizedEventListener {
 		);
 		$faqList->readObjects();
 		
+		/** @var	SearchExtendedItem[]	$items */
 		$items = [];
 		foreach ($faqList->getObjects() as $faq) {
 			$items[] = new SearchExtendedItem(
@@ -68,7 +69,8 @@ class ExtendedSearchFAQListener implements IParameterizedEventListener {
 					'FAQ',
 					[
 						'object' => $faq
-					]
+					],
+					'#entry-'.$faq->getObjectID()
 				),
 				$faq->views,
 				(EXTENDED_SEARCH_FAQ_ENABLE_PATH ? $faq->getCategory()->getTitle() : '')
