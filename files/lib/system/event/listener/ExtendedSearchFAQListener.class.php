@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\event\listener;
+use wcf\data\faq\FAQ;
 use wcf\data\faq\FAQCache;
 use wcf\data\faq\FAQList;
 use wcf\data\search\extended\SearchExtendedGroup;
@@ -44,10 +45,19 @@ class ExtendedSearchFAQListener implements IParameterizedEventListener {
 		$accessibleCategoryIDs = \array_keys(FAQCache::getInstance()->getCategories());
 		
 		$faqList = new FAQList();
+		$faqList->sqlJoins = 'LEFT JOIN '.FAQ::getDatabaseTableName().'_search_index search_index ON (search_index.objectID = faq.faqID)';
 		$faqList->sqlLimit = EXTENDED_SEARCH_FAQ_COUNT;
 		$faqList->sqlOrderBy = 'faq.views DESC';
 		$faqList->getConditionBuilder()->add('faq.categoryID IN (?)', [ $accessibleCategoryIDs ]);
 		$faqList->getConditionBuilder()->add('faq.isDisabled = ?', [ 0 ]);
+		$faqList->getConditionBuilder()->add('search_index.languageID = ?', [ WCF::getLanguage()->getObjectID() ]);
+		$faqList->getConditionBuilder()->add(
+			'(search_index.subject LIKE ? OR search_index.message LIKE ?)',
+			[
+				$this->eventObj->getSearchString(EXTENDED_SEARCH_SEARCH_TYPE),
+				$this->eventObj->getSearchString(EXTENDED_SEARCH_SEARCH_TYPE)
+			]
+		);
 		$faqList->readObjects();
 		
 		$items = [];
