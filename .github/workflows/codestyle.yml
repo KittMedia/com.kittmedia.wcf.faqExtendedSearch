@@ -10,5 +10,5 @@ jobs:
                 runs-on: ubuntu-latest
                 steps:
                         - uses: actions/checkout@v2
-                        - run: git clone --branch="5.3" --depth=1 --quiet git://github.com/WoltLab/WCF.git com.woltlab.wcf
+                        - run: git clone --branch="5.3" --depth=1 --quiet https://github.com/WoltLab/WCF.git com.woltlab.wcf
                         - uses: chekalsky/phpcs-action@v1
