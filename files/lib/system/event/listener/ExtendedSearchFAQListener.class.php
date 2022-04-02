@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\event\listener;
+use wcf\action\ExtendedSearchAction;
 use wcf\data\faq\FAQ;
 use wcf\data\faq\FAQCache;
 use wcf\data\faq\FAQList;
@@ -9,19 +10,19 @@ use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
- * Extends the extended search of `cwalz.de` and prepares FAQ entries
+ * Extends the extended search of `Darkwood.Design` (formerly by `cwalz.de`) and prepares FAQ entries
  * as search results.
  *
  * @author	Dennis Kraffczyk
- * @copyright	2011-2018 KittMedia
- * @license	Free <https://kittmedia.com/licenses/#licenseFree>
+ * @copyright	2011-2022 KittMedia
+ * @license	Free <https://shop.kittmedia.com/core/licenses/#licenseFree>
  * @package	com.kittmedia.wcf.faqExtendedSearch
- * @category	Community Framework
+ * @category	Suite Core
  */
 class ExtendedSearchFAQListener implements IParameterizedEventListener {
 	/**
 	 * Instance of the ExtendedSearchAction
-	 * @var		\wcf\action\ExtendedSearchAction
+	 * @var		ExtendedSearchAction
 	 */
 	private $eventObj;
 	
@@ -34,7 +35,13 @@ class ExtendedSearchFAQListener implements IParameterizedEventListener {
 		}
 		
 		$this->eventObj = $eventObj;
-		$this->eventObj->data[] = $this->getFAQs();
+		
+		if (in_array($this->eventObj->getSearchType(), [
+			'everywhere',
+			'com.kittmedia.wcf.faq'
+		])) {
+			$this->eventObj->data[] = $this->getFAQs();
+		}
 	}
 	
 	/**
